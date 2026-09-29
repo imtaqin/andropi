@@ -445,11 +445,15 @@ footer a { color: var(--muted); }
 
   // Step tracking runs whatever the motion setting: it is navigation, not decoration.
   steps.forEach(function (s) {
+    var i = +s.dataset.step;
     ScrollTrigger.create({
-      trigger: s, start: 'top 55%', end: 'bottom 45%',
-      onToggle: function (self) { if (self.isActive) show(+s.dataset.step); }
+      trigger: s, start: 'top 60%', end: 'bottom 40%',
+      onEnter: function () { show(i); },
+      onEnterBack: function () { show(i); }
     });
   });
+  // Images above the steps change their positions once loaded.
+  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 
   gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', function () {
     // Hero entrance, with the ribbon drawing itself across the page.
