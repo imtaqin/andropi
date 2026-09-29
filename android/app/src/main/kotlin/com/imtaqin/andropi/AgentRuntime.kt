@@ -85,6 +85,8 @@ object AgentRuntime {
             "TERM" to "dumb",
             "LANG" to "en_US.UTF-8",
             "PI_SKIP_VERSION_CHECK" to "1",
+            // AndroPI sends no telemetry; keep pi's install ping off even if a future version bundles it.
+            "PI_TELEMETRY" to "0",
             "NODE_OPTIONS" to "--max-old-space-size=1024",
             // The Termux builds look under /data/data/com.termux; point them at ours.
             "GIT_EXEC_PATH" to gitExec.path,

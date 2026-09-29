@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AndroPI Privacy Policy</title>
+<meta name="description" content="How AndroPI handles your data. AndroPI has no servers and collects nothing; your data goes only to the services you connect.">
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./"><img src="assets/logo.png" alt="">AndroPI</a>
+    <nav class="nav">
+      <a href="https://github.com/imtaqin/andropi">GitHub</a>
+      <a href="https://github.com/imtaqin/andropi/releases/latest">Download</a>
+      <a href="privacy.html" aria-current="page">Privacy</a>
+    </nav>
+  </header>
+</div>
+
+<main class="narrow doc">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Effective 29 September 2026 · App: AndroPI (com.imtaqin.andropi)</p>
+  <nav class="lang" aria-label="Language">
+    <a href="#english" aria-current="true">English</a>
+    <a href="#indonesia">Bahasa Indonesia</a>
+  </nav>
+
+  <!-- ============================== ENGLISH ============================== -->
+  <section id="english" lang="en">
+    <div class="summary">
+      <p><strong>In short:</strong> AndroPI runs on your phone and has no servers of its own. The developer does not collect, receive, sell or share any of your data. There are no ads, analytics, trackers or crash reporters. Data leaves your phone only when you connect a service (an AI provider, GitHub, Vercel, your own servers) or ask the agent to use the internet, and it goes directly to that service.</p>
+    </div>
+
+    <h2>Who we are</h2>
+    <p>AndroPI is an open source app (MIT license) made by imtaqin (GitHub <a href="https://github.com/fdciabdul">@fdciabdul</a>). The source code is public at <a href="https://github.com/imtaqin/andropi">github.com/imtaqin/andropi</a>, so you can check everything on this page yourself.</p>
+
+    <h2>Data the developer collects</h2>
+    <p>None. AndroPI does not create an account with us, does not send usage statistics, and does not include any advertising, analytics or crash reporting SDK. We have no server that receives data from the app.</p>
+
+    <h2>Data stored on your phone</h2>
+    <p>Everything you create in AndroPI stays on your device:</p>
+    <ul>
+      <li>Chats and agent sessions, settings, skills, prompt templates, schedules and task history.</li>
+      <li>Project files in the AndroPI workspace, or in folders on your phone that you choose to open.</li>
+      <li>The Linux container (Debian or Alpine) and anything installed in it.</li>
+      <li>Credentials you add: AI provider API keys or sign-ins, GitHub and Vercel tokens, SSH keys and server details, MCP server settings and search API keys. These are encrypted with AES-256-GCM using a key held by the Android Keystore.</li>
+    </ul>
+    <p>A backup file is created only when you ask for one, and it is saved where you choose. It can contain your chats, settings and credentials, so keep it somewhere safe.</p>
+
+    <h2>Data sent to services you choose</h2>
+    <p>AndroPI connects to other services only to do what you ask. Data goes straight from your phone to that service and is handled under that service's own privacy policy.</p>
+    <div class="table">
+      <table>
+        <thead><tr><th>Service</th><th>When</th><th>What is sent</th></tr></thead>
+        <tbody>
+          <tr><td>AI model provider you connect (e.g. Anthropic, OpenAI, Google, OpenRouter)</td><td>Every time you chat with the agent</td><td>Your messages, attached images and files, and the context the agent reads while working, such as file contents and command output. Also your API key or sign-in token.</td></tr>
+          <tr><td>GitHub</td><td>When you sign in and use git or GitHub features</td><td>Device-code sign-in, then API requests and git traffic for the repositories, issues, pull requests and Actions runs you work with.</td></tr>
+          <tr><td>Vercel</td><td>When you connect Vercel and deploy</td><td>Your token and the project files you deploy.</td></tr>
+          <tr><td>Your SSH servers</td><td>When you connect or deploy over SSH</td><td>Your SSH key authentication and the files or commands you send.</td></tr>
+          <tr><td>Web search (DuckDuckGo, Brave Search, or Tavily/Brave API if you add a key) and websites</td><td>When the agent searches or reads a web page</td><td>The search query or page address the agent requests.</td></tr>
+          <tr><td>DNS over HTTPS (Cloudflare by default, Google, or a resolver you set)</td><td>When the app looks up a hostname</td><td>The hostname being looked up. You can switch to your phone's normal DNS in Settings.</td></tr>
+          <tr><td>Docker Hub, Linux package mirrors, npm, PyPI</td><td>When you install the container or the agent installs packages</td><td>Standard download requests.</td></tr>
+          <tr><td>Skill sources (GitHub, skills.md, agentskills.io)</td><td>When you search or install skills</td><td>Your search terms and download requests.</td></tr>
+          <tr><td>MCP servers you add</td><td>When the agent uses their tools</td><td>The tool inputs the agent sends, plus any headers or keys you configured.</td></tr>
+          <tr><td>localhost.run</td><td>Only when you share a running dev server with a public link</td><td>Traffic to and from that dev server.</td></tr>
+          <tr><td>Your phone's speech recognizer (e.g. Google)</td><td>Only when you use voice input</td><td>Your voice, handled by the system speech service.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Permissions</h2>
+    <ul>
+      <li><strong>Internet</strong>: to reach the services above.</li>
+      <li><strong>Notifications and foreground service</strong>: to keep the agent running while it works and tell you when it finishes or needs approval.</li>
+      <li><strong>All files access / storage</strong> (optional): only if you choose to open projects in shared storage.</li>
+      <li><strong>Camera</strong> (optional): only when you take a photo to attach to a chat.</li>
+      <li><strong>Biometrics</strong> (optional): only if you turn on app lock. Your fingerprint never leaves the phone and AndroPI never sees it.</li>
+    </ul>
+
+    <h2>Your choices and deleting data</h2>
+    <ul>
+      <li>Delete chats, projects, keys and accounts inside the app at any time.</li>
+      <li>Clearing the app's storage or uninstalling AndroPI deletes everything it stored on your phone.</li>
+      <li>Revoke GitHub access at <a href="https://github.com/settings/applications">github.com/settings/applications</a>, and revoke API keys in your AI provider's or Vercel's dashboard.</li>
+      <li>For data already sent to a service you connected, contact that service.</li>
+    </ul>
+
+    <h2>Children</h2>
+    <p>AndroPI is a developer tool and is not directed at children under 13.</p>
+
+    <h2>Changes</h2>
+    <p>If this policy changes, the new version will be published on this page with a new effective date. The history of changes is visible in the public repository.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy: <code>cp@imtaqin.id</code>, or open an issue at <a href="https://github.com/imtaqin/andropi/issues">github.com/imtaqin/andropi/issues</a>.</p>
+  </section>
+
+  <!-- ============================== INDONESIA ============================== -->
+  <section id="indonesia" lang="id">
+    <h1 style="margin-top: 72px">Kebijakan Privasi</h1>
+    <p class="updated">Berlaku 29 September 2026 · Aplikasi: AndroPI (com.imtaqin.andropi)</p>
+
+    <div class="summary">
+      <p><strong>Singkatnya:</strong> AndroPI berjalan di HP kamu dan tidak punya server sendiri. Developer tidak mengumpulkan, menerima, menjual, atau membagikan data kamu. Tidak ada iklan, analitik, pelacak, atau pelaporan crash. Data hanya keluar dari HP kamu saat kamu menghubungkan layanan (penyedia AI, GitHub, Vercel, server kamu sendiri) atau meminta agent memakai internet, dan data itu langsung dikirim ke layanan tersebut.</p>
+    </div>
+
+    <h2>Tentang kami</h2>
+    <p>AndroPI adalah aplikasi open source (lisensi MIT) buatan imtaqin (GitHub <a href="https://github.com/fdciabdul">@fdciabdul</a>). Kode sumbernya publik di <a href="https://github.com/imtaqin/andropi">github.com/imtaqin/andropi</a>, jadi semua isi halaman ini bisa kamu cek sendiri.</p>
+
+    <h2>Data yang dikumpulkan developer</h2>
+    <p>Tidak ada. AndroPI tidak membuat akun di sistem kami, tidak mengirim statistik pemakaian, dan tidak memuat SDK iklan, analitik, maupun pelaporan crash. Kami tidak punya server yang menerima data dari aplikasi.</p>
+
+    <h2>Data yang disimpan di HP kamu</h2>
+    <p>Semua yang kamu buat di AndroPI tetap ada di perangkat kamu:</p>
+    <ul>
+      <li>Chat dan sesi agent, pengaturan, skill, template prompt, jadwal, dan riwayat tugas.</li>
+      <li>File project di workspace AndroPI, atau di folder HP yang kamu pilih untuk dibuka.</li>
+      <li>Container Linux (Debian atau Alpine) dan semua yang terpasang di dalamnya.</li>
+      <li>Kredensial yang kamu tambahkan: API key atau login penyedia AI, token GitHub dan Vercel, kunci SSH dan detail server, pengaturan server MCP, dan API key pencarian. Semuanya dienkripsi dengan AES-256-GCM memakai kunci yang disimpan di Android Keystore.</li>
+    </ul>
+    <p>File backup hanya dibuat kalau kamu memintanya, dan disimpan di tempat yang kamu pilih. File ini bisa berisi chat, pengaturan, dan kredensial kamu, jadi simpan di tempat yang aman.</p>
+
+    <h2>Data yang dikirim ke layanan pilihan kamu</h2>
+    <p>AndroPI hanya terhubung ke layanan lain untuk menjalankan permintaan kamu. Data dikirim langsung dari HP kamu ke layanan tersebut dan diatur oleh kebijakan privasi layanan itu sendiri.</p>
+    <div class="table">
+      <table>
+        <thead><tr><th>Layanan</th><th>Kapan</th><th>Yang dikirim</th></tr></thead>
+        <tbody>
+          <tr><td>Penyedia model AI yang kamu hubungkan (mis. Anthropic, OpenAI, Google, OpenRouter)</td><td>Setiap kali kamu chat dengan agent</td><td>Pesan kamu, gambar dan file yang dilampirkan, serta konteks yang dibaca agent saat bekerja, seperti isi file dan output perintah. Juga API key atau token login kamu.</td></tr>
+          <tr><td>GitHub</td><td>Saat kamu login dan memakai fitur git atau GitHub</td><td>Login dengan kode perangkat, lalu permintaan API dan lalu lintas git untuk repositori, issue, pull request, dan GitHub Actions yang kamu pakai.</td></tr>
+          <tr><td>Vercel</td><td>Saat kamu menghubungkan Vercel dan deploy</td><td>Token kamu dan file project yang kamu deploy.</td></tr>
+          <tr><td>Server SSH kamu</td><td>Saat kamu terhubung atau deploy lewat SSH</td><td>Autentikasi kunci SSH kamu dan file atau perintah yang kamu kirim.</td></tr>
+          <tr><td>Pencarian web (DuckDuckGo, Brave Search, atau API Tavily/Brave jika kamu menambahkan key) dan situs web</td><td>Saat agent mencari atau membaca halaman web</td><td>Kata kunci pencarian atau alamat halaman yang diminta agent.</td></tr>
+          <tr><td>DNS over HTTPS (Cloudflare secara default, Google, atau resolver pilihan kamu)</td><td>Saat aplikasi mencari alamat sebuah hostname</td><td>Hostname yang dicari. Kamu bisa beralih ke DNS bawaan HP di Pengaturan.</td></tr>
+          <tr><td>Docker Hub, mirror paket Linux, npm, PyPI</td><td>Saat kamu memasang container atau agent memasang paket</td><td>Permintaan unduhan biasa.</td></tr>
+          <tr><td>Sumber skill (GitHub, skills.md, agentskills.io)</td><td>Saat kamu mencari atau memasang skill</td><td>Kata kunci pencarian dan permintaan unduhan.</td></tr>
+          <tr><td>Server MCP yang kamu tambahkan</td><td>Saat agent memakai tool-nya</td><td>Input tool yang dikirim agent, ditambah header atau key yang kamu atur.</td></tr>
+          <tr><td>localhost.run</td><td>Hanya saat kamu membagikan dev server lewat link publik</td><td>Lalu lintas ke dan dari dev server tersebut.</td></tr>
+          <tr><td>Pengenal suara di HP kamu (mis. Google)</td><td>Hanya saat kamu memakai input suara</td><td>Suara kamu, diproses oleh layanan pengenal suara sistem.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Izin aplikasi</h2>
+    <ul>
+      <li><strong>Internet</strong>: untuk terhubung ke layanan di atas.</li>
+      <li><strong>Notifikasi dan layanan latar depan</strong>: agar agent tetap berjalan saat bekerja dan memberi tahu kamu saat selesai atau butuh persetujuan.</li>
+      <li><strong>Akses semua file / penyimpanan</strong> (opsional): hanya jika kamu memilih membuka project di penyimpanan bersama.</li>
+      <li><strong>Kamera</strong> (opsional): hanya saat kamu mengambil foto untuk dilampirkan di chat.</li>
+      <li><strong>Biometrik</strong> (opsional): hanya jika kamu menyalakan kunci aplikasi. Sidik jari kamu tidak pernah keluar dari HP dan tidak pernah bisa dilihat AndroPI.</li>
+    </ul>
+
+    <h2>Pilihan kamu dan penghapusan data</h2>
+    <ul>
+      <li>Hapus chat, project, key, dan akun di dalam aplikasi kapan saja.</li>
+      <li>Menghapus data aplikasi atau meng-uninstall AndroPI akan menghapus semua yang disimpannya di HP kamu.</li>
+      <li>Cabut akses GitHub di <a href="https://github.com/settings/applications">github.com/settings/applications</a>, dan cabut API key di dashboard penyedia AI atau Vercel kamu.</li>
+      <li>Untuk data yang sudah terkirim ke layanan yang kamu hubungkan, hubungi layanan tersebut.</li>
+    </ul>
+
+    <h2>Anak-anak</h2>
+    <p>AndroPI adalah alat untuk developer dan tidak ditujukan untuk anak di bawah 13 tahun.</p>
+
+    <h2>Perubahan</h2>
+    <p>Jika kebijakan ini berubah, versi barunya akan dipublikasikan di halaman ini dengan tanggal berlaku yang baru. Riwayat perubahannya bisa dilihat di repositori publik.</p>
+
+    <h2>Kontak</h2>
+    <p>Pertanyaan tentang kebijakan ini: <code>cp@imtaqin.id</code>, atau buka issue di <a href="https://github.com/imtaqin/andropi/issues">github.com/imtaqin/andropi/issues</a>.</p>
+  </section>
+</main>
+
+<div class="wrap">
+  <footer>
+    <span>© 2026 imtaqin · <a href="https://github.com/fdciabdul">@fdciabdul</a></span>
+    <span><a href="./">Home</a> · <a href="https://github.com/imtaqin/andropi/blob/main/LICENSE">MIT License</a></span>
+  </footer>
+</div>
+</body>
+</html>
