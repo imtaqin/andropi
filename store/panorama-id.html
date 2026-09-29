@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Geist; src: url('file:///C:/Users/Administrator/Documents/PROJECT/AndroPI/assets/fonts/Geist-SemiBold.ttf'); font-weight: 600; }
+  @font-face { font-family: Geist; src: url('file:///C:/Users/Administrator/Documents/PROJECT/AndroPI/assets/fonts/Geist-Medium.ttf'); font-weight: 500; }
+  @font-face { font-family: Geist; src: url('file:///C:/Users/Administrator/Documents/PROJECT/AndroPI/assets/fonts/Geist-Regular.ttf'); font-weight: 400; }
+  @font-face { font-family: GeistMono; src: url('file:///C:/Users/Administrator/Documents/PROJECT/AndroPI/assets/fonts/GeistMono-Medium.ttf'); }
+  :root { --bg: #0B0B0D; --violet: #6E56CF; --lilac: #B7A8F5; --ink: #F5F5F7; --muted: #9E9EA6; --mint: #BDEFD9; --sun: #FDE7A6; --peach: #FFD2BF; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 5400px; height: 1920px; overflow: hidden; background: var(--bg); font-family: Geist, sans-serif; }
+  .stage { position: relative; width: 5400px; height: 1920px; }
+  svg.deco { position: absolute; inset: 0; }
+  .panel { position: absolute; top: 0; width: 1080px; height: 1920px; }
+  .head { position: absolute; top: 120px; left: 90px; right: 90px; color: var(--ink); }
+  .kicker { font-family: GeistMono; font-size: 30px; letter-spacing: 3px; color: var(--lilac); text-transform: uppercase; margin-bottom: 26px; }
+  h1 { font-weight: 600; font-size: 92px; line-height: 1.02; letter-spacing: -3.5px; }
+  h1 .hl { background: var(--violet); color: #fff; padding: 0 18px; border-radius: 18px; }
+  .sub { margin-top: 26px; font-size: 36px; line-height: 1.35; color: var(--muted); font-weight: 400; max-width: 860px; }
+  .phone { position: absolute; width: 760px; height: 1689px; border-radius: 96px; background: #1B1B20; padding: 16px; }
+  .phone .screen { position: relative; width: 728px; height: 1657px; border-radius: 82px; overflow: hidden; background: var(--bg); }
+  .phone img { width: 100%; display: block; }
+  .phone .bar { position: absolute; top: 0; left: 0; right: 0; height: 64px; background: var(--sbg, #0B0B0D); color: #fff; font-weight: 600; font-size: 24px; display: flex; align-items: center; justify-content: space-between; padding: 8px 56px 0; }
+  .phone .bar .batt { width: 38px; height: 18px; border: 2.5px solid #fff; border-radius: 5px; position: relative; }
+  .phone .bar .batt::after { content: ''; position: absolute; inset: 2px; background: #fff; border-radius: 2px; }
+  .phone .punch { position: absolute; top: 22px; left: 50%; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: #000; }
+  .chip { position: absolute; display: flex; align-items: center; gap: 16px; padding: 22px 34px; border-radius: 999px; font-size: 34px; font-weight: 600; color: #111113; white-space: nowrap; }
+  .chip .dot { width: 18px; height: 18px; border-radius: 50%; background: currentColor; }
+  .chip.mono { font-family: GeistMono; font-weight: 500; font-size: 30px; }
+  .logo { position: absolute; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <!-- One continuous violet ribbon runs behind every phone, tying the five screenshots together. -->
+  <svg class="deco" width="5400" height="1920" viewBox="0 0 5400 1920">
+    <path d="M -100 1500 C 400 1250, 700 1750, 1150 1450 S 1900 1050, 2300 1350 S 3050 1800, 3450 1400 S 4150 1000, 4600 1300 S 5250 1650, 5550 1350"
+          fill="none" stroke="#6E56CF" stroke-width="150" stroke-linecap="round"/>
+    <path d="M -100 1500 C 400 1250, 700 1750, 1150 1450 S 1900 1050, 2300 1350 S 3050 1800, 3450 1400 S 4150 1000, 4600 1300 S 5250 1650, 5550 1350"
+          fill="none" stroke="#B7A8F5" stroke-width="6" stroke-dasharray="4 26" stroke-linecap="round" transform="translate(0 -120)"/>
+    <!-- Flat shapes that straddle the seams between panels -->
+    <circle cx="1080" cy="880" r="150" fill="#FDE7A6"/>
+    <rect x="2080" y="560" width="240" height="240" rx="56" fill="#BDEFD9" transform="rotate(14 2200 680)"/>
+    <circle cx="3240" cy="1780" r="120" fill="#FFD2BF"/>
+    <rect x="4230" y="760" width="200" height="200" rx="100" fill="#B7A8F5"/>
+    <circle cx="5230" cy="560" r="60" fill="#FDE7A6"/>
+  </svg>
+
+  <!-- 1. Home -->
+  <section class="panel" style="left:0">
+    <div class="head">
+      <div class="kicker">AndroPI</div>
+      <h1>Agen AI coding,<br>langsung di <span class="hl">HP</span></h1>
+      <div class="sub">Tulis, jalankan, dan deploy kode cuma dari Android.</div>
+    </div>
+    <div class="phone" style="left:160px; top:640px"><div class="screen"><img src="raw/id_home.png"><div class="bar"><span>9:41</span><span class="batt"></span></div><div class="punch"></div></div></div>
+  </section>
+
+  <!-- 2. Live coding -->
+  <section class="panel" style="left:1080px">
+    <div class="head">
+      <div class="kicker">Langsung</div>
+      <h1>Lihat kodenya<br><span class="hl">ditulis</span> langsung</h1>
+      <div class="sub">Setiap baris muncul saat pi menulisnya, lengkap dengan tool yang dipakai.</div>
+    </div>
+    <div class="phone" style="left:160px; top:700px"><div class="screen"><img src="raw/chat_stream.png"><div class="bar"><span>9:41</span><span class="batt"></span></div><div class="punch"></div></div></div>
+  </section>
+
+  <!-- 3. Live preview -->
+  <section class="panel" style="left:2160px">
+    <div class="head">
+      <div class="kicker">Pratinjau</div>
+      <h1>Websitenya jadi,<br><span class="hl">tanpa</span> laptop</h1>
+      <div class="sub">Buka hasilnya langsung di app, ikut update selagi pi bekerja.</div>
+    </div>
+    <div class="phone" style="left:160px; top:640px"><div class="screen"><img src="raw/preview_live.png"><div class="bar" style="--sbg:#000"><span>9:41</span><span class="batt"></span></div><div class="punch"></div></div></div>
+  </section>
+
+  <!-- 4. Linux -->
+  <section class="panel" style="left:3240px">
+    <div class="head">
+      <div class="kicker">Container Linux</div>
+      <h1>Debian asli.<br><span class="hl">apt</span>, Python, Node</h1>
+      <div class="sub">pi bisa install apa aja yang dibutuhin project kamu.</div>
+    </div>
+    <div class="phone" style="left:160px; top:700px"><div class="screen"><img src="raw/term1.png"><div class="bar"><span>9:41</span><span class="batt"></span></div><div class="punch"></div></div></div>
+  </section>
+
+  <!-- 5. Deploy -->
+  <section class="panel" style="left:4320px">
+    <div class="head">
+      <div class="kicker">Rilis</div>
+      <h1>Deploy dalam<br><span class="hl">satu tap</span></h1>
+      <div class="sub">GitHub Pages, Vercel, atau server kamu sendiri lewat SSH.</div>
+    </div>
+    <div class="phone" style="left:160px; top:640px"><div class="screen"><img src="raw/deploy.png"><div class="bar" style="--sbg:#070708"><span>9:41</span><span class="batt"></span></div><div class="punch"></div></div></div>
+  </section>
+
+  <!-- Chips placed across seams so the set reads as one strip -->
+  <div class="chip" style="left:830px; top:1180px; background:#FDE7A6"><span class="dot" style="color:#F76B15"></span>Bikin web app</div>
+  <div class="chip mono" style="left:1850px; top:1560px; background:#BDEFD9">index.html ditulis ✓</div>
+  <div class="chip" style="left:2930px; top:1060px; background:#ffffff"><span class="dot" style="color:#30A46C"></span>Langsung</div>
+  <div class="chip mono" style="left:3960px; top:1500px; background:#FFD2BF">$ apt install python3</div>
+  <div class="chip" style="left:4980px; top:1180px; background:#B7A8F5; color:#111113">GitHub Pages ✓</div>
+</div>
+</body>
+</html>

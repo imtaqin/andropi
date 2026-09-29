@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Geist; src: url('file:///C:/Users/Administrator/Documents/PROJECT/AndroPI/assets/fonts/Geist-SemiBold.ttf'); font-weight: 600; }
+  @font-face { font-family: Geist; src: url('file:///C:/Users/Administrator/Documents/PROJECT/AndroPI/assets/fonts/Geist-Regular.ttf'); font-weight: 400; }
+  @font-face { font-family: GeistMono; src: url('file:///C:/Users/Administrator/Documents/PROJECT/AndroPI/assets/fonts/GeistMono-Medium.ttf'); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* Drawn at 2x (2048x1000) and scaled down to 1024x500 for crisp edges. */
+  html, body { width: 2048px; height: 1000px; overflow: hidden; background: #0B0B0D; font-family: Geist, sans-serif; }
+  .stage { position: relative; width: 2048px; height: 1000px; overflow: hidden; }
+  svg.deco { position: absolute; inset: 0; }
+  .left { position: absolute; left: 110px; top: 150px; width: 900px; color: #F5F5F7; }
+  .brand { display: flex; align-items: center; gap: 28px; }
+  .brand img { height: 150px; }
+  .brand .name { font-size: 118px; font-weight: 600; letter-spacing: -4.5px; }
+  h1 { margin-top: 48px; font-size: 76px; line-height: 1.06; font-weight: 600; letter-spacing: -2.5px; }
+  h1 .hl { background: #6E56CF; color: #fff; padding: 0 16px; border-radius: 16px; }
+  .tags { margin-top: 44px; display: flex; gap: 16px; }
+  .tag { font-family: GeistMono; font-size: 28px; color: #111113; padding: 14px 26px; border-radius: 999px; }
+  .phone { position: absolute; width: 470px; height: 1044px; border-radius: 64px; background: #1B1B20; padding: 11px; }
+  .phone .screen { width: 448px; height: 1022px; border-radius: 54px; overflow: hidden; position: relative; }
+  .phone img { width: 100%; display: block; }
+  .phone .bar { position: absolute; top: 0; left: 0; right: 0; height: 40px; background: var(--sbg, #0B0B0D); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg class="deco" width="2048" height="1000" viewBox="0 0 2048 1000">
+    <path d="M 900 1080 C 1150 760, 1350 980, 1560 700 S 1900 420, 2150 560" fill="none" stroke="#6E56CF" stroke-width="130" stroke-linecap="round"/>
+    <circle cx="1130" cy="170" r="70" fill="#FDE7A6"/>
+    <rect x="1930" y="820" width="150" height="150" rx="38" fill="#BDEFD9" transform="rotate(12 2005 895)"/>
+  </svg>
+  <div class="left">
+    <div class="brand"><img src="file:///C:/Users/Administrator/Documents/PROJECT/AndroPI/assets/brand/logo.png"><span class="name">AndroPI</span></div>
+    <h1>Agen AI coding<br>di <span class="hl">saku</span> kamu</h1>
+    <div class="tags">
+      <span class="tag" style="background:#FDE7A6">kode live</span>
+      <span class="tag" style="background:#BDEFD9">linux</span>
+      <span class="tag" style="background:#FFD2BF">deploy</span>
+    </div>
+  </div>
+  <div class="phone" style="left:1240px; top:120px"><div class="screen"><img src="raw/chat_stream.png"><div class="bar"></div></div></div>
+  <div class="phone" style="left:1560px; top:230px"><div class="screen"><img src="raw/preview_live.png"><div class="bar" style="--sbg:#000"></div></div></div>
+</div>
+</body>
+</html>

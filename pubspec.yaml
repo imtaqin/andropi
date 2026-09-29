@@ -1,0 +1,54 @@
+name: andropi
+description: "Run the pi coding agent locally on Android."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.4
+
+dependencies:
+  file_picker: ^13.1.0
+  flutter:
+    sdk: flutter
+  flutter_markdown_plus: ^1.0.12
+  flutter_pty: ^0.4.2
+  flutter_svg: ^2.3.0
+  highlight: ^0.7.0
+  image_picker: ^1.2.3
+  local_auth: ^3.0.2
+  lucide_icons_flutter: ^3.1.20
+  markdown: ^7.3.1
+  re_editor: ^0.10.0
+  re_highlight: ^0.0.3
+  simple_icons: ^16.23.0
+  webview_flutter: ^4.14.1
+  webview_flutter_android: ^4.14.1
+  xterm: ^4.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/illustrations/
+    - assets/brand/
+  fonts:
+    - family: Geist
+      fonts:
+        - asset: assets/fonts/Geist-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Geist-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Geist-SemiBold.ttf
+          weight: 600
+    - family: GeistMono
+      fonts:
+        - asset: assets/fonts/GeistMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/GeistMono-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/GeistMono-SemiBold.ttf
+          weight: 600

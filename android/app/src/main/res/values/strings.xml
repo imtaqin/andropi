@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_description">Start a chat with pi or talk to it</string>
+    <string name="tile_label">New pi chat</string>
+</resources>
