@@ -53,3 +53,9 @@ app.*.map.json
 /android/app/src/main/assets/agent.stamp
 /agent/node_modules/
 __pycache__/
+
+# JVM crash logs
+hs_err_pid*.log
+
+# Release outputs (APK/AAB and the Play Store bundle)
+/release/
