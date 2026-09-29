@@ -66,7 +66,8 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       ..add(agent.client.records.where((r) => r['type'] == 'launch').listen((_) => _takeLaunch()))
       ..add(
         f.done.stream.listen((preview) {
-          if (_inBackground) agent.client.notify(1, 'pi is done', preview.isEmpty ? 'Tap to see the result' : preview);
+          // Id 1 belongs to the foreground service notification, which is removed when the agent stops.
+          if (_inBackground) agent.client.notify(11, 'pi is done', preview.isEmpty ? 'Tap to see the result' : preview);
         }),
       )
       ..add(
