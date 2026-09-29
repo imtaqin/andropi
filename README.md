@@ -45,18 +45,20 @@ Anthropic, OpenAI, Gemini, OpenRouter and the other providers pi supports.
 ## Build
 
 Requirements: Flutter (stable), Node.js 20+, Python 3 with `lief` (`pip install lief`), the Android SDK/NDK, and an
-arm64 Android device.
+Android 8+ device (arm64, armv7 or x86_64).
 
 ```bash
 # 1. Native runtime: node, git, ssh, rsync, curl, proot, ... from the Termux repository, repackaged as jniLibs
+#    for arm64-v8a, armeabi-v7a and x86_64 (pass ABI names to build only some)
 python tool/bundle_runtime.py
 
 # 2. The agent host (TypeScript), bundled into android/app/src/main/assets/agent.zip
 cd agent && npm install && node build.mjs && cd ..
 
-# 3. The app
+# 3. The app: one APK per ABI, or an app bundle with all three for Play
 flutter pub get
-flutter build apk --release
+flutter build apk --release --split-per-abi --target-platform android-arm,android-arm64,android-x64
+flutter build appbundle --release --target-platform android-arm,android-arm64,android-x64
 ```
 
 Steps 1 and 2 generate files that are not in the repository (`jniLibs/`, `agent.zip`). Run them again after you

@@ -14,6 +14,14 @@ import { type Log, run } from "./integrations.js";
 
 export type Distro = "debian" | "alpine";
 
+/** The Docker platform matching this phone's CPU (node reports the ABI the APK was installed for). */
+const PLATFORM =
+	process.arch === "arm"
+		? { architecture: "arm", variant: "v7", label: "linux/arm/v7" }
+		: process.arch === "x64"
+			? { architecture: "amd64", variant: undefined, label: "linux/amd64" }
+			: { architecture: "arm64", variant: undefined, label: "linux/arm64" };
+
 const IMAGES: Record<Distro, { repo: string; tag: string; label: string }> = {
 	debian: { repo: "library/debian", tag: "stable-slim", label: "Debian (stable, slim)" },
 	alpine: { repo: "library/alpine", tag: "latest", label: "Alpine Linux" },
@@ -84,7 +92,7 @@ export class Container {
 		rmSync(this.metaFile, { force: true });
 		mkdirSync(this.rootfs, { recursive: true });
 
-		log(`Pulling ${image.repo.replace("library/", "")}:${image.tag} (linux/arm64)…`);
+		log(`Pulling ${image.repo.replace("library/", "")}:${image.tag} (${PLATFORM.label})…`);
 		const layers = await this.resolveLayers(image.repo, image.tag);
 		for (const [i, layer] of layers.entries()) {
 			log(`Layer ${i + 1}/${layers.length} · ${(layer.size / 1e6).toFixed(1)} MB`);
@@ -139,9 +147,12 @@ export class Container {
 			)
 		).json()) as any;
 		const arm = (index.manifests ?? []).find(
-			(m: any) => m.platform?.os === "linux" && m.platform?.architecture === "arm64",
+			(m: any) =>
+				m.platform?.os === "linux" &&
+				m.platform?.architecture === PLATFORM.architecture &&
+				(!PLATFORM.variant || m.platform?.variant === PLATFORM.variant),
 		);
-		if (!arm) throw new Error("No linux/arm64 image available");
+		if (!arm) throw new Error(`No ${PLATFORM.label} image available`);
 		const manifest = (await (
 			await this.registry(
 				repo,

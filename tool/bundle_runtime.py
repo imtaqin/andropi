@@ -1,5 +1,6 @@
-"""Fetch Node.js (and ripgrep/fd) for Android arm64 from the Termux apt repo
-and repackage them as jniLibs so they can be exec'd from nativeLibraryDir.
+"""Fetch Node.js (and ripgrep/fd, git, ...) for each Android ABI from the Termux
+apt repo and repackage them as jniLibs so they can be exec'd from
+nativeLibraryDir.
 
 Android only lets apps exec files that live in the (read-only) native library
 directory, and the packager only ships files named lib*.so. So every binary is
@@ -7,7 +8,8 @@ renamed to lib<name>.so and every shared library whose soname does not end in
 .so gets a new soname; DT_NEEDED entries are rewritten to match and RUNPATHs
 pointing at the Termux prefix are dropped (we use LD_LIBRARY_PATH instead).
 
-Usage: python tool/bundle_runtime.py
+Usage: python tool/bundle_runtime.py [arm64-v8a] [armeabi-v7a] [x86_64]
+       (no arguments: all three)
 """
 
 import io
@@ -21,11 +23,11 @@ from pathlib import Path
 import lief
 
 REPO = "https://packages.termux.dev/apt/termux-main"
-INDEX = f"{REPO}/dists/stable/main/binary-aarch64/Packages"
+# Android ABI -> Termux architecture.
+ABIS = {"arm64-v8a": "aarch64", "armeabi-v7a": "arm", "x86_64": "x86_64"}
 
 ROOT = Path(__file__).resolve().parent.parent
-CACHE = ROOT / "build" / "termux-cache"
-OUT = ROOT / "android" / "app" / "src" / "main" / "jniLibs" / "arm64-v8a"
+JNILIBS = ROOT / "android" / "app" / "src" / "main" / "jniLibs"
 
 # package -> {binary path inside prefix: output name}
 # Output names must not collide with a real library soname (libcurl.so, ...).
@@ -130,6 +132,18 @@ def jni_name(soname):
 
 
 def main():
+    abis = sys.argv[1:] or list(ABIS)
+    for abi in abis:
+        if abi not in ABIS:
+            sys.exit(f"unknown ABI {abi}; pick from {', '.join(ABIS)}")
+    for abi in abis:
+        print(f"== {abi} ({ABIS[abi]})")
+        bundle(ABIS[abi], JNILIBS / abi)
+
+
+def bundle(arch, OUT):
+    CACHE = ROOT / "build" / "termux-cache" / arch
+    INDEX = f"{REPO}/dists/stable/main/binary-{arch}/Packages"
     CACHE.mkdir(parents=True, exist_ok=True)
     stage = CACHE / "stage"
     shutil.rmtree(stage, ignore_errors=True)

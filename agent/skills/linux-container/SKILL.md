@@ -46,5 +46,5 @@ Alpine: `apk add python3 py3-pip nodejs npm build-base`.
 - You are root inside, but it is emulated (proot): no kernel modules, no
   systemd/services, no Docker, no mounting. Run servers in the foreground or
   with `nohup ... &`.
-- It is ARM64 (aarch64). Pick arm64/aarch64 downloads.
+- Check the CPU with `uname -m` (aarch64, armv7l or x86_64) and pick matching downloads.
 - Processes are slower than native; avoid unbounded builds.

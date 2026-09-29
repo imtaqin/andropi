@@ -1,7 +1,7 @@
 name: andropi
 description: "Run the pi coding agent locally on Android."
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
   sdk: ^3.13.4

@@ -5,7 +5,7 @@
 // variable import specifiers relative to its own files, so it has to ship as
 // an installed package. The host imports it from agent/node_modules.
 import { execSync } from "node:child_process";
-import { build } from "esbuild";
+import { build, transformSync } from "esbuild";
 import { cpSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,9 +33,10 @@ execSync(`npm install --omit=dev --ignore-scripts --no-audit --no-fund @earendil
 const dropDirs = new Set(["@esbuild", "@types", "examples", "test", "tests", "__tests__", ".github", "prebuilds"]);
 const dropFile = (name) =>
 	name.endsWith(".map") ||
-	name.endsWith(".d.ts") ||
-	name.endsWith(".d.mts") ||
-	name.endsWith(".d.cts") ||
+	// TypeScript sources and typings ship next to the compiled JS; node only loads the JS.
+	/\.(m|c)?ts$/.test(name) ||
+	// READMEs, docs images and changelogs. LICENSE files stay.
+	/\.(md|markdown|png|jpe?g|gif|svg)$/i.test(name) ||
 	name === "CHANGELOG.md" ||
 	name === "npm-shrinkwrap.json";
 function prune(dir) {
@@ -50,6 +51,41 @@ function prune(dir) {
 	}
 }
 prune(join(stage, "node_modules"));
+
+// The host imports pi's SDK entry (dist/index.js); the CLI's prebuilt bundle and the docs are never loaded.
+const piDir = join(stage, "node_modules", "@earendil-works", "pi-coding-agent");
+rmSync(join(piDir, "dist", "bundle"), { recursive: true, force: true });
+rmSync(join(piDir, "docs"), { recursive: true, force: true });
+
+// Minify every script and JSON file in place. The package layout stays as is, because pi loads some modules through
+// import() paths computed at runtime (OAuth, Bedrock), which a single-file bundle would break.
+let before = 0;
+let after = 0;
+function minify(dir) {
+	for (const name of readdirSync(dir)) {
+		const path = join(dir, name);
+		if (statSync(path).isDirectory()) {
+			minify(path);
+			continue;
+		}
+		const isScript = /\.(m|c)?js$/.test(name);
+		if (!isScript && !name.endsWith(".json")) continue;
+		const source = readFileSync(path, "utf8");
+		before += source.length;
+		let output = source;
+		try {
+			output = isScript
+				? transformSync(source, { loader: "js", minify: true, keepNames: true, legalComments: "none", target: "node22" }).code
+				: JSON.stringify(JSON.parse(source));
+		} catch {
+			// Leave anything esbuild can't parse untouched.
+		}
+		after += output.length;
+		if (output !== source) writeFileSync(path, output);
+	}
+}
+minify(join(stage, "node_modules"));
+console.log(`minified node_modules: ${(before / 1e6).toFixed(1)} MB -> ${(after / 1e6).toFixed(1)} MB`);
 
 // 3. Host script; pi stays an external import resolved from node_modules.
 mkdirSync(out, { recursive: true });

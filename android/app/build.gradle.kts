@@ -24,8 +24,12 @@ android {
     }
 
     defaultConfig {
-        ndk {
-            abiFilters += "arm64-v8a"
+        // Only the ABIs tool/bundle_runtime.py ships a runtime for. `--split-per-abi` sets its own ABI splits,
+        // which can't be combined with abiFilters.
+        if (!project.hasProperty("split-per-abi")) {
+            ndk {
+                abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+            }
         }
         applicationId = "com.imtaqin.andropi"
         minSdk = 26
