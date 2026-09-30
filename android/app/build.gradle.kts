@@ -50,6 +50,14 @@ android {
         }
     }
 
+    // "full" is the GitHub build with "All files access" for opening any folder on the phone. "play" is the Google
+    // Play build: Play only allows that permission for file managers, so it works inside the app's workspace.
+    flavorDimensions += "store"
+    productFlavors {
+        create("full") { dimension = "store" }
+        create("play") { dimension = "store" }
+    }
+
     signingConfigs {
         if (keyProperties.isNotEmpty()) {
             create("release") {

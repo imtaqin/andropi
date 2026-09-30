@@ -36,6 +36,9 @@ class _FolderPickerState extends State<FolderPicker> with WidgetsBindingObserver
   late String workspace = widget.agent.info['workspace'] as String? ?? '/';
   String phoneRoot = '/storage/emulated/0';
   bool phoneGranted = false;
+
+  /// False in the Play build, which has no "All files access": only the workspace is offered.
+  bool phoneAvailable = true;
   late String path = workspace;
   bool showHidden = false;
 
@@ -65,6 +68,11 @@ class _FolderPickerState extends State<FolderPicker> with WidgetsBindingObserver
     if (!mounted) return;
     setState(() {
       phoneGranted = a.granted;
+      phoneAvailable = a.available;
+      if (!phoneAvailable && root == _Root.phone) {
+        root = _Root.workspace;
+        path = base;
+      }
       phoneRoot = a.root;
     });
   }
@@ -144,26 +152,36 @@ class _FolderPickerState extends State<FolderPicker> with WidgetsBindingObserver
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
-            child: SegmentedButton<_Root>(
-              showSelectedIcon: false,
-              segments: const [
-                ButtonSegment(
-                  value: _Root.workspace,
-                  icon: Icon(LucideIcons.boxes, size: 16),
-                  label: Text('Workspace'),
-                ),
-                ButtonSegment(
-                  value: _Root.phone,
-                  icon: Icon(LucideIcons.smartphone, size: 16),
-                  label: Text('Phone storage'),
-                ),
-              ],
-              selected: {root},
-              onSelectionChanged: (s) => _switch(s.first),
+          if (!phoneAvailable)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
+              child: Text(
+                'Projects live in the AndroPI workspace. To bring in files from your phone, open a project and use '
+                'Files → Import from phone.',
+                style: text.bodySmall,
+              ),
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
+              child: SegmentedButton<_Root>(
+                showSelectedIcon: false,
+                segments: const [
+                  ButtonSegment(
+                    value: _Root.workspace,
+                    icon: Icon(LucideIcons.boxes, size: 16),
+                    label: Text('Workspace'),
+                  ),
+                  ButtonSegment(
+                    value: _Root.phone,
+                    icon: Icon(LucideIcons.smartphone, size: 16),
+                    label: Text('Phone storage'),
+                  ),
+                ],
+                selected: {root},
+                onSelectionChanged: (s) => _switch(s.first),
+              ),
             ),
-          ),
           // Breadcrumbs: tap a segment to jump back up.
           SizedBox(
             height: 36,

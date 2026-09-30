@@ -122,7 +122,8 @@ class MainActivity : FlutterFragmentActivity() {
                     // Shared storage: "All files access" is granted in system settings.
                     "storageAccess" -> result.success(
                         mapOf(
-                            "granted" to hasStorageAccess(),
+                            "available" to storageAccessDeclared(),
+                            "granted" to (storageAccessDeclared() && hasStorageAccess()),
                             "root" to Environment.getExternalStorageDirectory().path,
                         )
                     )
@@ -278,6 +279,14 @@ class MainActivity : FlutterFragmentActivity() {
             .setAutoCancel(true)
             .build()
         manager.notify(id, n)
+    }
+
+    /** The Play build removes MANAGE_EXTERNAL_STORAGE from its manifest; the GitHub build keeps it. */
+    private fun storageAccessDeclared(): Boolean {
+        if (Build.VERSION.SDK_INT < 30) return true
+        @Suppress("DEPRECATION")
+        val info = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+        return info.requestedPermissions?.contains(Manifest.permission.MANAGE_EXTERNAL_STORAGE) == true
     }
 
     private fun hasStorageAccess(): Boolean =

@@ -135,7 +135,7 @@ class _NewChatSheetState extends State<_NewChatSheet> {
                     icon: LucideIcons.folderOpen,
                     color: const Color(0xFF14B8A6),
                     title: tr('Open a folder'),
-                    subtitle: tr('An existing project, or any folder on your phone'),
+                    subtitle: tr('Continue in an existing project folder'),
                     onTap: () => Navigator.pop(context, _pick),
                   ),
                   SettingsRow(

@@ -48,10 +48,10 @@ class AgentClient {
 
   Future<void> openUrl(String url) => _method.invokeMethod('openUrl', url);
 
-  /// Whether the app may read and write shared storage, and where it is.
-  Future<({bool granted, String root})> storageAccess() async {
+  /// Whether this build can ask for shared storage at all (the Play build can't), whether it has it, and where it is.
+  Future<({bool available, bool granted, String root})> storageAccess() async {
     final m = (await _method.invokeMethod<Map>('storageAccess'))!;
-    return (granted: m['granted'] == true, root: m['root'] as String);
+    return (available: m['available'] != false, granted: m['granted'] == true, root: m['root'] as String);
   }
 
   /// Keeps the app alive in the background (queued runs, schedules).

@@ -55,10 +55,12 @@ python tool/bundle_runtime.py
 # 2. The agent host (TypeScript), bundled into android/app/src/main/assets/agent.zip
 cd agent && npm install && node build.mjs && cd ..
 
-# 3. The app: one APK per ABI, or an app bundle with all three for Play
+# 3. The app. Two flavors:
+#    full: GitHub builds, with "All files access" so projects can live in any folder on the phone
+#    play: Google Play builds, without it (projects live in the app's workspace)
 flutter pub get
-flutter build apk --release --split-per-abi --target-platform android-arm,android-arm64,android-x64
-flutter build appbundle --release --target-platform android-arm,android-arm64,android-x64
+flutter build apk --flavor full --release --split-per-abi --target-platform android-arm,android-arm64,android-x64
+flutter build appbundle --flavor play --release --target-platform android-arm,android-arm64,android-x64
 ```
 
 Steps 1 and 2 generate files that are not in the repository (`jniLibs/`, `agent.zip`). Run them again after you

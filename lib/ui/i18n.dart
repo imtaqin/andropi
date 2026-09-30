@@ -168,7 +168,7 @@ const _id = <String, String>{
   'New project': 'Proyek baru',
   'A fresh folder in the workspace': 'Folder baru di workspace',
   'Open a folder': 'Buka folder',
-  'An existing project, or any folder on your phone': 'Proyek yang ada, atau folder mana pun di HP',
+  'Continue in an existing project folder': 'Lanjut di folder proyek yang sudah ada',
   'Create and start': 'Buat dan mulai',
   'Each chat can have its own folder to work in.': 'Setiap chat bisa punya folder kerjanya sendiri.',
   'Recent projects': 'Proyek terbaru',
