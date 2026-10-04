@@ -1,0 +1,3 @@
+- Notifikasi "pi is done" diperbaiki, sebelumnya hilang saat agent berhenti
+- Telemetri instalasi pi dimatikan secara eksplisit
+- Build untuk arm64, armv7, dan x86_64

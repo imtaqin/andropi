@@ -1,0 +1,3 @@
+- Fixed the "pi is done" notification, which disappeared when the agent stopped
+- pi's install telemetry is turned off explicitly
+- Builds for arm64, armv7 and x86_64
