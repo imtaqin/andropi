@@ -1,1 +1,43 @@
 AndroPI menghadirkan agen AI coding sungguhan di HP Android kamu. Cukup ceritakan apa yang mau dibuat, agen akan menulis kodenya, menjalankannya, menampilkan preview langsung, lalu men-deploy-nya. Tanpa laptop.
+
+LIHAT KODENYA DITULIS LANGSUNG
+• Balasan dan kode muncul real-time saat agen menulisnya
+• Setiap langkah terlihat: file yang dibaca, perintah yang dijalankan, perubahan yang dibuat
+• Preview HTML langsung yang ikut update selagi halaman ditulis
+
+LINUX ASLI DI HP KAMU
+• Container Debian atau Alpine bawaan, aktif otomatis
+• apt, pip, dan npm jalan, jadi agen bisa install Python, Node.js, dan apa pun yang dibutuhkan project kamu
+• Terminal multi-tab dengan SSH ke server kamu
+
+PROJECT, GIT, DAN GITHUB
+• Setiap chat bisa punya folder project sendiri di workspace AndroPI
+• Impor file dari HP, lalu simpan atau bagikan hasilnya (Download, share)
+• File explorer, editor kode, pencarian seluruh project, dan tampilan diff
+• Checkpoint untuk membatalkan semua perubahan agen dalam satu kali jalan
+• Login GitHub, lalu clone, commit, push, ganti branch, dan buka pull request
+• Ubah issue GitHub jadi pekerjaan dan pantau GitHub Actions
+
+DEPLOY SEKALI TAP
+• GitHub Pages, Vercel, atau server kamu sendiri lewat SSH
+• Bagikan dev server yang sedang jalan lewat link publik
+
+KAMU TETAP PEGANG KENDALI
+• Mode persetujuan: tanya semua, tanya yang berisiko saja, atau bypass semua
+• Mode rencana: cek rencananya dulu sebelum ada yang diubah
+• Batas biaya harian, pantauan pemakaian dan biaya, serta ganti model otomatis saat kena limit
+• Kunci aplikasi dengan sidik jari, token terenkripsi, backup dan restore
+
+FITUR LANJUTAN
+• Server MCP, skill, dan katalog skill yang bisa dicari
+• Template prompt dan perintah slash
+• Tugas latar belakang, agen paralel, dan jadwal
+• Lampiran gambar dan file, input suara, share ke AndroPI dari app lain
+• Widget layar utama dan tile Quick Settings
+• Pencarian web yang tetap jalan di jaringan yang memblokir DNS
+
+PAKAI MODEL PILIHAN KAMU
+Mendukung Anthropic Claude, OpenAI, Google Gemini, OpenRouter, dan provider lain yang didukung agen pi. Login dengan akun atau API key kamu sendiri.
+
+OPEN SOURCE
+AndroPI berlisensi MIT: https://github.com/imtaqin/andropi

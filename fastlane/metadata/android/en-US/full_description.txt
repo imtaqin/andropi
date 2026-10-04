@@ -1,1 +1,43 @@
 AndroPI puts a real AI coding agent on your Android phone. Describe what you want, and the agent writes the code, runs it, shows you a live preview and deploys it. No laptop needed.
+
+WATCH IT CODE IN REAL TIME
+• Replies and code stream in as the agent writes them
+• Every step is visible: files read, commands run, edits made
+• Live HTML preview that updates while the page is being written
+
+A REAL LINUX ON YOUR PHONE
+• Built-in Debian or Alpine container, on by default
+• apt, pip and npm work, so the agent can install Python, Node.js and whatever your project needs
+• Multi-tab terminal with SSH to your servers
+
+PROJECTS, GIT AND GITHUB
+• Give each chat its own project folder in the AndroPI workspace
+• Import files from your phone, and save or share results (Downloads, share sheet)
+• File explorer, code editor, project-wide search and a diff view
+• Checkpoints let you undo everything the agent changed in a run
+• Sign in with GitHub, then clone, commit, push, switch branches and open pull requests
+• Turn GitHub issues into work and follow GitHub Actions runs
+
+DEPLOY IN ONE TAP
+• GitHub Pages, Vercel, or your own server over SSH
+• Share a running dev server with a public link
+
+YOU STAY IN CONTROL
+• Approval modes: ask for everything, ask only for risky actions, or bypass all
+• Plan mode: review the plan before anything changes
+• Daily budget, usage and cost tracking, and automatic fallback to another model
+• App lock with fingerprint, encrypted tokens, backup and restore
+
+POWER FEATURES
+• MCP servers, skills and a searchable skills catalogue
+• Prompt templates and slash commands
+• Background tasks, parallel agents and schedules
+• Image and file attachments, voice input, share to AndroPI from other apps
+• Home screen widget and Quick Settings tile
+• Web search that works on networks with DNS blocking
+
+BRING YOUR OWN MODEL
+Works with Anthropic Claude, OpenAI, Google Gemini, OpenRouter and other providers supported by the pi agent. You sign in with your own account or API key.
+
+OPEN SOURCE
+AndroPI is MIT licensed: https://github.com/imtaqin/andropi
