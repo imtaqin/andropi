@@ -79,13 +79,6 @@ a { color: inherit; }
 .phone .screen { width: 100%; height: 100%; border-radius: 42px; overflow: hidden; background: var(--bg); position: relative; }
 .phone video, .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .phone .punch { position: absolute; top: 14px; left: 50%; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: #000; z-index: 3; }
-.chip { position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px; color: #111113; font: 500 15px/1 var(--sans); white-space: nowrap; }
-.chip.mono { font: 400 14px/1 var(--mono); }
-.chip .dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
-.chip.c1 { background: var(--sun); left: -26%; top: 18%; }
-.chip.c2 { background: #fff; right: -18%; top: 42%; }
-.chip.c2 .dot { color: #30A46C; }
-.chip.c3 { background: var(--peach); left: -20%; bottom: 16%; }
 .blob { position: absolute; z-index: 1; border-radius: 50%; }
 .blob.b1 { width: 150px; height: 150px; background: var(--sun); right: -20%; top: -4%; }
 .blob.b2 { width: 110px; height: 110px; background: var(--mint); left: -18%; bottom: 36%; border-radius: 28px; transform: rotate(14deg); }
@@ -124,15 +117,16 @@ section.block { padding-block: clamp(80px, 11vw, 140px); position: relative; }
 .card { background: var(--surface); border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; position: relative; }
 .card h3 { margin: 0; font-size: 24px; letter-spacing: -.5px; font-weight: 600; line-height: 1.15; }
 .card p { margin: 0; color: var(--muted); font-size: 16px; }
-.card .tag { align-self: flex-start; font: 400 12px/1 var(--mono); padding: 8px 12px; border-radius: 999px; color: #111113; }
+.card .tag { font: 400 12px/1 var(--mono); letter-spacing: 2.5px; text-transform: uppercase; color: var(--lilac); }
+.card.violet .tag { color: #E6E0FF; }
 .span-4 { grid-column: span 4; } .span-2 { grid-column: span 2; } .span-3 { grid-column: span 3; }
 .term { margin-top: 8px; background: var(--bg); border-radius: 18px; padding: 20px 22px; font: 400 14px/1.75 var(--mono); color: #D8D8DD; min-height: 250px; overflow-x: auto; white-space: nowrap; }
 .term .p { color: var(--lilac); }
 .term .ok { color: var(--mint); }
 .term .cur { display: inline-block; width: 9px; height: 17px; background: var(--ink); vertical-align: -3px; }
-.modes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-.modes span { font: 400 13px/1 var(--mono); padding: 10px 14px; border-radius: 999px; background: var(--raised); color: var(--muted); }
-.modes span.on { background: var(--violet); color: #fff; }
+.modes { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 6px; background: var(--raised); border-radius: 12px; padding: 4px; }
+.modes span { font: 500 13px/1 var(--sans); padding: 11px 6px; border-radius: 9px; color: var(--muted); text-align: center; white-space: nowrap; }
+.modes span.on { background: var(--ink); color: var(--bg); }
 .big-num { font-size: clamp(80px, 9vw, 120px); font-weight: 600; letter-spacing: -.06em; line-height: .85; }
 .card.violet { background: var(--violet); }
 .card.violet h3, .card.violet .big-num { color: #fff; }
@@ -157,8 +151,7 @@ section.block { padding-block: clamp(80px, 11vw, 140px); position: relative; }
 /* Open source */
 .oss { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: end; }
 .oss h2 { font-size: clamp(48px, 7.4vw, 104px); line-height: .95; letter-spacing: -.055em; margin: 16px 0 0; font-weight: 600; }
-.stack { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-.stack span { font: 400 14px/1 var(--mono); padding: 11px 15px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.stack { margin: 28px 0 0; font: 400 15px/1.7 var(--mono); color: var(--muted); max-width: 46ch; }
 
 footer { border-top: 1px solid var(--line); padding-block: 34px 44px; color: var(--muted); font-size: 14px; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; }
@@ -180,9 +173,6 @@ footer a { color: var(--muted); }
   .oss .cta { justify-content: flex-start !important; }
 }
 @media (max-width: 520px) {
-  .chip { font-size: 13px; padding: 9px 13px; }
-  .chip.mono { font-size: 12px; }
-  .chip.c1 { left: -14%; } .chip.c2 { right: -12%; } .chip.c3 { left: -12%; }
   .blob.b1 { width: 100px; height: 100px; right: -12%; }
   .blob.b2 { width: 76px; height: 76px; left: -10%; }
 }
@@ -243,9 +233,6 @@ footer a { color: var(--muted); }
             <video src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline aria-label="AndroPI writing a website and showing its live preview"></video>
           </div>
         </div>
-        <span class="chip c1 mono">write index.html ✓</span>
-        <span class="chip c2"><span class="dot"></span>Live preview</span>
-        <span class="chip c3 mono">$ apt install python3</span>
       </div>
     </div>
 
@@ -311,7 +298,7 @@ footer a { color: var(--muted); }
       </div>
       <div class="bento">
         <article class="card span-4 reveal">
-          <span class="tag" style="background: var(--peach)">linux container</span>
+          <span class="tag">linux container</span>
           <h3>A real Debian, not a sandbox</h3>
           <p>apt, pip and npm work. The agent installs whatever your project needs, and you get a multi-tab terminal with SSH.</p>
           <div class="term" id="term" aria-label="Terminal output">
@@ -332,29 +319,29 @@ footer a { color: var(--muted); }
           <p>Your code and keys stay on your phone. Data only goes to the services you connect.</p>
         </article>
         <article class="card span-2 reveal">
-          <span class="tag" style="background: var(--sun)">you decide</span>
+          <span class="tag">you decide</span>
           <h3>Approvals your way</h3>
           <p>Let pi ask before risky commands, before every change, or never.</p>
           <div class="modes"><span>Ask all</span><span class="on">Risky only</span><span>Bypass all</span></div>
         </article>
         <article class="card span-2 reveal">
-          <span class="tag" style="background: var(--mint)">git push</span>
+          <span class="tag">git push</span>
           <h3>Git and GitHub built in</h3>
           <p>Sign in with a device code. Clone, commit, push, branch, and turn issues into pull requests.</p>
         </article>
         <article class="card span-2 reveal">
-          <span class="tag" style="background: var(--peach)">undo</span>
+          <span class="tag">undo</span>
           <h3>Checkpoints on every run</h3>
           <p>See the diff of what the agent changed and roll it back in one tap.</p>
         </article>
         <article class="card span-3 reveal">
-          <span class="tag" style="background: var(--mint)">skills · mcp</span>
+          <span class="tag">skills · mcp</span>
           <h3>Skills and MCP servers</h3>
           <p>Give the agent new abilities. Install skills from a searchable catalogue or connect any MCP server.</p>
           <img class="shot" src="assets/skills.jpg" alt="Skills catalogue in AndroPI" loading="lazy">
         </article>
         <article class="card span-3 reveal">
-          <span class="tag" style="background: var(--sun)">background</span>
+          <span class="tag">background</span>
           <h3>Keeps working when you leave</h3>
           <p>Queue tasks, run agents in parallel and schedule jobs. A notification tells you when pi is done or needs you.</p>
           <img class="shot" src="assets/terminal.jpg" alt="AndroPI terminal" loading="lazy">
@@ -399,7 +386,7 @@ footer a { color: var(--muted); }
       <div>
         <span class="eyebrow">Open source</span>
         <h2>Free. MIT. <span class="hl">Yours.</span></h2>
-        <div class="stack"><span>Flutter</span><span>pi agent</span><span>Node.js</span><span>Termux packages</span><span>proot</span><span>MCP</span></div>
+        <p class="stack">Built with Flutter, the pi agent, Node.js, Termux packages, proot and MCP.</p>
       </div>
       <div class="cta" style="justify-content: flex-end">
         <a class="btn big light" href="https://github.com/imtaqin/andropi">View the source</a>
@@ -466,12 +453,8 @@ footer a { color: var(--muted); }
       .from('.lede, .hero .cta, .meta', { y: 24, opacity: 0, duration: .8, stagger: .08 }, '-=.7')
       .from('.stage .phone', { x: 80, rotate: 6, opacity: 0, duration: 1.2 }, '-=1.1')
       .from('.stage .blob', { scale: 0, duration: .8, stagger: .1, ease: 'back.out(1.7)' }, '-=.8')
-      .from('.stage .chip', { scale: .6, opacity: 0, duration: .6, stagger: .12, ease: 'back.out(1.8)' }, '-=.5')
       .to(ribbon, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.inOut' }, .2);
 
-    gsap.utils.toArray('.stage .chip').forEach(function (c, i) {
-      gsap.to(c, { y: i % 2 ? 12 : -12, duration: 2.4 + i * .4, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 1.8 });
-    });
     gsap.to('.blob.b2', { rotate: 40, duration: 8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
     gsap.to('.stage', { yPercent: -10, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
 
