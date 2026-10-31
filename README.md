@@ -20,12 +20,15 @@ Write, run, preview and deploy code without a laptop.</p>
 AndroPI puts the [pi coding agent](https://github.com/earendil-works/pi) on Android. The agent runs locally in a
 bundled Node.js runtime. It reads and writes files, runs shell commands in a real Debian or Alpine container,
 searches the web, and ships your project to GitHub Pages, Vercel or your own server. You bring the model:
-Anthropic, OpenAI, Gemini, OpenRouter and the other providers pi supports.
+Anthropic, OpenAI, Gemini, OpenRouter and the other providers pi supports — or any OpenAI-compatible
+endpoint you run yourself.
 
 ## Features
 
 - **Chat with a coding agent.** Replies stream in real time, with code blocks, tool calls and a live HTML
   preview that updates while the agent writes the page.
+- **Bring your own endpoint.** Any OpenAI-compatible server — Ollama, LM Studio, vLLM, a proxy or a company
+  gateway — becomes a provider of its own: give it a base URL, fetch its model list, chat through it.
 - **Linux container.** Debian or Alpine through proot, so `apt`, `pip` and `npm` work. It is on by default and is
   the agent's shell.
 - **Projects.** Each chat can use its own folder, or you can open any folder on the phone. The app includes a file
@@ -50,23 +53,39 @@ Anthropic, OpenAI, Gemini, OpenRouter and the other providers pi supports.
 
 ## Build
 
-Requirements: Flutter (stable), Node.js 20+, Python 3 with `lief` (`pip install lief`), the Android SDK/NDK, and an
-Android 8+ device (arm64, armv7 or x86_64).
+Requirements: Flutter (stable), Node.js 20+, Python 3 with `lief`, the Android SDK/NDK, and an Android 8+ device
+(arm64, armv7 or x86_64). The repo's `mise.toml` installs all of it for this checkout only — [mise](https://mise.jdx.dev)
+pins Flutter, JDK 17, the Android command-line tools, Node and Python without touching the machine's global
+environment:
+
+```bash
+mise install                                # the toolchain, installed per checkout
+mise x -- python -m pip install lief        # for tool/bundle_runtime.py
+mise x -- sdkmanager --licenses             # accept the SDK licences once
+mise x -- sdkmanager platform-tools "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358"
+```
+
+On Windows, do this once per shell before step 2: build scripts shell out to `python`, and the WindowsApps
+App Execution Alias otherwise answers it with "Python was not found". `bin/python.cmd` forwards to the mise Python.
+
+```powershell
+$env:PATH = "$PWD\bin;$env:PATH"
+```
 
 ```bash
 # 1. Native runtime: node, git, ssh, rsync, curl, proot, ... from the Termux repository, repackaged as jniLibs
 #    for arm64-v8a, armeabi-v7a and x86_64 (pass ABI names to build only some)
-python tool/bundle_runtime.py
+mise x -- python tool/bundle_runtime.py
 
 # 2. The agent host (TypeScript), bundled into android/app/src/main/assets/agent.zip
-cd agent && npm install && node build.mjs && cd ..
+cd agent && mise x -- npm install && mise x -- node build.mjs && cd ..
 
 # 3. The app. Two flavors:
 #    full: GitHub builds, with "All files access" so projects can live in any folder on the phone
 #    play: Google Play builds, without it (projects live in the app's workspace)
-flutter pub get
-flutter build apk --flavor full --release --split-per-abi --target-platform android-arm,android-arm64,android-x64
-flutter build appbundle --flavor play --release --target-platform android-arm,android-arm64,android-x64
+mise x -- flutter pub get
+mise x -- flutter build apk --flavor full --release --split-per-abi --target-platform android-arm,android-arm64,android-x64
+mise x -- flutter build appbundle --flavor play --release --target-platform android-arm,android-arm64,android-x64
 ```
 
 Steps 1 and 2 generate files that are not in the repository (`jniLibs/`, `agent.zip`). Run them again after you

@@ -303,6 +303,8 @@ Brand providerBrand(BuildContext context, String id) {
   }
   if (key.contains('bedrock') || key.contains('amazon')) return Brand(LucideIcons.cloud, const Color(0xFFFF9900));
   if (key.contains('llama.cpp') || key.contains('local')) return Brand(LucideIcons.cpu, p.muted);
+  // Endpoints the user defined themselves: an unknown host, not a known vendor.
+  if (key.startsWith('custom-')) return Brand(LucideIcons.server, p.muted);
   return Brand(LucideIcons.bot, p.muted);
 }
 

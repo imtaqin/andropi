@@ -3,6 +3,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../agent/agent_controller.dart';
 import '../agent/models.dart';
+import 'custom_provider_sheet.dart';
 import 'login_flow.dart';
 import 'kit.dart';
 import 'theme.dart';
@@ -68,6 +69,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               for (final pr in others) _ProviderTile(provider: pr, agent: agent),
+              _Header(
+                'Custom endpoints',
+                trailing: TextButton.icon(
+                  onPressed: () => _addEndpoint(context),
+                  icon: const Icon(LucideIcons.plus, size: 18),
+                  label: const Text('Add'),
+                ),
+              ),
+              if (agent.customProviders.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
+                  child: Text(
+                    'Point the app at any server that speaks an OpenAI-compatible API: Ollama, LM Studio, '
+                    'vLLM, a proxy or your own gateway.',
+                    style: text.bodySmall,
+                  ),
+                ),
+              for (final c in agent.customProviders) _CustomTile(endpoint: c, agent: agent),
               const _Header('Environment'),
               _InfoRow('pi', agent.info['version']?.toString() ?? '—'),
               _InfoRow('Node.js', agent.info['node']?.toString() ?? '—'),
@@ -83,16 +102,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
       },
     );
   }
+
+  Future<void> _addEndpoint(BuildContext context) async {
+    final saved = await showCustomProviderSheet(context, widget.agent);
+    if (saved == true && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Endpoint saved')));
+    }
+  }
+}
+
+/// One endpoint defined in models.json: edit it or remove it.
+class _CustomTile extends StatelessWidget {
+  const _CustomTile({required this.endpoint, required this.agent});
+  final CustomProviderInfo endpoint;
+  final AgentController agent;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+      leading: BrandTile(id: endpoint.id, size: 38),
+      title: Text(endpoint.name, style: Theme.of(context).textTheme.titleSmall),
+      subtitle: Text('${endpoint.modelIds.length} models  ·  ${endpoint.summary}'),
+      trailing: Icon(LucideIcons.chevronRight, size: 18, color: p.faint),
+      onTap: () async {
+        final changed = await showCustomProviderSheet(context, agent, provider: endpoint);
+        if (changed == true && context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Endpoint updated')));
+        }
+      },
+    );
+  }
 }
 
 class _Header extends StatelessWidget {
-  const _Header(this.label);
+  const _Header(this.label, {this.trailing});
   final String label;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
-    child: Text(label.toUpperCase(), style: Theme.of(context).textTheme.labelSmall),
+    padding: EdgeInsets.fromLTRB(20, 24, 20, trailing == null ? 8 : 0),
+    child: Row(
+      children: [
+        Expanded(child: Text(label.toUpperCase(), style: Theme.of(context).textTheme.labelSmall)),
+        ?trailing,
+      ],
+    ),
   );
 }
 
@@ -148,6 +205,22 @@ class _ProviderTile extends StatelessWidget {
 
   Future<void> _open(BuildContext context) async {
     final methods = provider.methods;
+    // Our own endpoint is edited (or removed) in its own sheet, not disconnected.
+    if (provider.custom) {
+      CustomProviderInfo? endpoint;
+      for (final c in agent.customProviders) {
+        if (c.id == provider.id) endpoint = c;
+      }
+      endpoint ??= CustomProviderInfo({
+        'id': provider.id,
+        'name': provider.name,
+        'baseUrl': '',
+        'api': 'openai-completions',
+        'models': const [],
+      });
+      await showCustomProviderSheet(context, agent, provider: endpoint);
+      return;
+    }
     if (provider.configured) {
       final disconnect = await showModalBottomSheet<bool>(
         context: context,

@@ -28,6 +28,7 @@ import {
 } from "@earendil-works/pi-coding-agent";
 import { Checkpoints } from "./checkpoints.js";
 import { Container, type Distro } from "./container.js";
+import { CUSTOM_APIS, CustomModels } from "./custom_models.js";
 import { installDohLookup } from "./dns.js";
 import * as gitops from "./gitops.js";
 import { Guard } from "./guard.js";
@@ -69,6 +70,7 @@ let templates: Templates;
 let checkpoints: Checkpoints;
 let runner: Runner;
 let mcp: Mcp;
+const customModels = new CustomModels(agentDir);
 const tunnels = new Tunnels();
 let unsubscribe: (() => void) | undefined;
 
@@ -330,6 +332,8 @@ async function login(providerId: string, method: "api_key" | "oauth") {
 }
 
 async function providers() {
+	// Entries pi only knows from models.json are ours to edit and delete.
+	const custom = new Set(customModels.list().map((c) => c.id));
 	const out = [];
 	for (const p of modelRuntime.getProviders()) {
 		const auth = p.auth as any;
@@ -340,9 +344,16 @@ async function providers() {
 			oauth: modelRuntime.isUsingOAuth(p.id),
 			methods: [auth.apiKey?.login ? "api_key" : null, auth.oauth ? "oauth" : null].filter(Boolean),
 			models: modelRuntime.getModels(p.id).length,
+			custom: custom.has(p.id),
 		});
 	}
 	return out;
+}
+
+/** pi reloads models.json itself; rebuild the idle chat so it sees the providers. */
+async function reloadCustomProviders() {
+	await modelRuntime.refresh({ allowNetwork: false });
+	if (session && !session.isStreaming) await reopenSession().catch(() => {});
 }
 
 // ---------------------------------------------------------------------------
@@ -494,6 +505,25 @@ async function handle(cmd: Command): Promise<unknown> {
 		case "logout":
 			await modelRuntime.logout(cmd.provider);
 			return providers();
+
+		// Custom endpoints (custom_models.ts): OpenAI-compatible servers pi has no
+		// built-in entry for. The app writes them into models.json and pi takes over.
+		case "custom_apis":
+			return CUSTOM_APIS;
+		case "custom_providers":
+			return customModels.list();
+		case "custom_provider_save": {
+			const saved = await customModels.save(cmd.provider ?? {});
+			await reloadCustomProviders();
+			return { provider: saved, providers: customModels.list(), list: await providers() };
+		}
+		case "custom_provider_delete": {
+			if (!customModels.remove(String(cmd.providerId ?? ""))) throw new Error("No such custom endpoint");
+			await reloadCustomProviders();
+			return { providers: customModels.list(), list: await providers() };
+		}
+		case "custom_provider_models":
+			return customModels.discover(String(cmd.baseUrl ?? ""), String(cmd.apiKey ?? ""));
 
 		case "new_session":
 			return openSession(SessionManager.create(cmd.cwd ?? workspace));

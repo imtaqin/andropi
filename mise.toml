@@ -1,0 +1,21 @@
+# Project-local toolchain for AndroPI.
+# The tools below are only active inside this checkout (`mise install` /
+# `mise exec` / a mise-enabled shell), so the machine's global environment
+# stays untouched.
+
+[tools]
+# Flutter app: Dart SDK ^3.13.4 (3.47.9 ships Dart 3.13.7).
+flutter = "3.47.9"
+# Android builds need a JDK that Gradle/AGP supports.
+java = "temurin-17"
+# Android command-line tools (sdkmanager, avdmanager); ANDROID_HOME points at
+# the install, see [env].
+android-sdk = "23.0"
+# agent(): bundles the pi host. pi needs Node >= 22.19.
+node = "22"
+# tool/bundle_runtime.py (with `lief`) repackages the Termux runtime.
+python = "3.12"
+
+# `mise run check` -> analyze + test with the versions above.
+[tasks.check]
+run = ["flutter analyze", "flutter test"]

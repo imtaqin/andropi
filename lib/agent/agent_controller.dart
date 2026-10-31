@@ -47,6 +47,10 @@ class AgentController extends ChangeNotifier {
   List<ProviderInfo> providers = const [];
   List<ModelInfo> models = const [];
 
+  /// Endpoints the user defined in models.json (any OpenAI-compatible server).
+  List<CustomProviderInfo> customProviders = const [];
+  List<CustomApiInfo> customApis = const [];
+
   /// Login prompts and notices from pi's auth flow, handled by the UI.
   final authRecords = StreamController<Map<String, dynamic>>.broadcast();
 
@@ -151,7 +155,41 @@ class AgentController extends ChangeNotifier {
       });
     final available = await client.call<List>('models');
     models = available.map((e) => ModelInfo((e as Map).cast<String, dynamic>())).toList();
+    final customs = await client.call<List>('custom_providers');
+    customProviders = customs.map((e) => CustomProviderInfo((e as Map).cast<String, dynamic>())).toList();
     notifyListeners();
+  }
+
+  /// The API shapes pi can speak; fetched once and reused by the edit sheet.
+  Future<List<CustomApiInfo>> loadCustomApis() async {
+    if (customApis.isEmpty) {
+      final apis = await client.call<List>('custom_apis');
+      customApis = apis.map((e) => CustomApiInfo((e as Map).cast<String, dynamic>())).toList();
+    }
+    return customApis;
+  }
+
+  /// Writes the endpoint to models.json and reloads pi, so its models appear.
+  Future<void> saveCustomProvider(Map<String, dynamic> provider) async {
+    await client.call('custom_provider_save', {'provider': provider});
+    await _afterCustomChange();
+  }
+
+  Future<void> deleteCustomProvider(String providerId) async {
+    await client.call('custom_provider_delete', {'providerId': providerId});
+    await _afterCustomChange();
+  }
+
+  Future<void> _afterCustomChange() async {
+    await refreshProviders();
+    _applyState(await client.call<Map<String, dynamic>>('state'));
+    notifyListeners();
+  }
+
+  /// Asks the endpoint itself for its model list (`GET <baseUrl>/models`).
+  Future<List<Map<String, dynamic>>> discoverModels({required String baseUrl, String apiKey = ''}) async {
+    final list = await client.call<List>('custom_provider_models', {'baseUrl': baseUrl, 'apiKey': apiKey});
+    return list.map((e) => (e as Map).cast<String, dynamic>()).toList();
   }
 
   Future<void> setModel(ModelInfo m) async {

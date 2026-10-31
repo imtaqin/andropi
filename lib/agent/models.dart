@@ -21,8 +21,36 @@ class ProviderInfo {
   String get name => json['name'] as String? ?? id;
   bool get configured => json['configured'] == true;
   bool get oauth => json['oauth'] == true;
+  bool get custom => json['custom'] == true;
   List<String> get methods => (json['methods'] as List? ?? const []).cast<String>();
   int get modelCount => json['models'] as int? ?? 0;
+}
+
+/// An endpoint the user defined themselves (models.json): any server speaking
+/// an API pi supports, such as an OpenAI-compatible one on the local network.
+class CustomProviderInfo {
+  CustomProviderInfo(this.json);
+  final Map<String, dynamic> json;
+
+  String get id => json['id'] as String;
+  String get name => json['name'] as String? ?? id;
+  String get baseUrl => json['baseUrl'] as String? ?? '';
+  String get api => json['api'] as String? ?? 'openai-completions';
+  bool get hasKey => json['hasKey'] == true;
+  bool get images => json['images'] == true;
+  List<String> get modelIds =>
+      ((json['models'] as List?) ?? const []).map((m) => (m as Map)['id'] as String? ?? '').where((s) => s.isNotEmpty).toList();
+
+  String get summary => hasKey ? 'API key · $baseUrl' : 'No key needed · $baseUrl';
+}
+
+/// The API shapes pi implements; the app offers exactly these.
+class CustomApiInfo {
+  CustomApiInfo(this.json);
+  final Map<String, dynamic> json;
+
+  String get id => json['id'] as String;
+  String get label => json['label'] as String? ?? id;
 }
 
 class SessionSummary {
